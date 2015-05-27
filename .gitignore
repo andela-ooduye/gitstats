@@ -1,0 +1,15 @@
+temp
+node_modules
+*.env
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+.floo
+.flooignore
+.DS_Store
+npm-debug.log
