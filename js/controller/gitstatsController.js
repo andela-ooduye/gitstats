@@ -13,32 +13,27 @@ app.controller("GitCtrl", function($scope, $http){
       .success(function(data){
         $scope.members = data;
         $scope.loaded = true;
+        $scope.members.org = $scope.orgname;
         var i = 0;
+
         for (x in $scope.members){
-          $http.get($scope.usersUrl + $scope.members[x].login + "/repos" + $scope.authKey)
+          $http.get($scope.usersUrl + $scope.members[x].login + $scope.authKey)
             .success(function(data){
-              $scope.repos = data;
-              $scope.members[i].repoNum = $scope.repos.length;
-              ++i;
-              $scope.members[i].ghname = $scope.repos.name
-              for (y in $scope.repos){
-                // var total = 0;
-                $http.get("https://api.github.com/repos/" + $scope.members[x].login +"/" + $scope.repos[y].name + "/commits") 
-                var total = 0;
-                $http.get($scope.reposUrl + $scope.members[x].login +"/" + $scope.repos[y].name + "/commits" + $scope.authKey) 
-                  .success(function(data){
-                    // total += data.length;
-                    console.log(data.length);
-                  })
-                  .error(function( ){
-                    // total += 0;
-                  })
+              $scope.users = data;
+              if ($scope.members[i]){
+                $scope.members[i].userName = $scope.users.name;
+                $scope.members[i].repoNum = $scope.users.public_repos;
+                $scope.members[i].followers = $scope.users.followers;
+                $scope.members[i].following = $scope.users.following;
+                ++i
               }
-              // console.log(total);
+            })
+            .error(function(){
+
             })
         }
       })
-      .error(function( ){
+      .error(function(){
         $scope.orgNotFound = true;
       })
   }
