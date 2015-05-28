@@ -17,16 +17,17 @@ app.controller("GitCtrl", function($scope, $http){
               ++i;
               $scope.members[i].ghname = $scope.repos.name
               for (y in $scope.repos){
-                var total = 0;
+                // var total = 0;
                 $http.get("https://api.github.com/repos/" + $scope.members[x].login +"/" + $scope.repos[y].name + "/commits") 
                   .success(function(data){
-                    total += data.length;
+                    // total += data.length;
+                    console.log(data.length);
                   })
                   .error(function( ){
-                    total += 0;
+                    // total += 0;
                   })
               }
-              console.log(total);
+              // console.log(total);
             })
         }
       })
