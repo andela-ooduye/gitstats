@@ -3,11 +3,11 @@
   <head>
     <title>Dashboard for Andela GitHub Users</title>
 
-    <!-- CSS -->
-    <link href="css/style.css" rel="stylesheet">
-
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="css/style.css" rel="stylesheet">
     
   </head>
 
@@ -16,7 +16,10 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 main">
+          <div class="paragragh">
           <h1 class="page-header">Dashboard</h1><br/>
+          <p>Becoming a programmer takes a small bit of intelligence and a LOT of persistence. Writing code regularly keeps your brain focused and helps you grasp difficult concepts. In order to encourage consistent coding, we've built a leaderboard for any organization. Input your organization name and a leaderboard would appear below. The more you repositories, the higher up the leaderboard you'll get!</p>
+        </div>
           <div>
             <p>Enter a single Github organisation below and click the button to display organisation leaderboard.</p></br>
             <div class="col-md-6 main">
@@ -27,38 +30,36 @@
           </div>
           
           <div ng-show = "loaded">
-          <h2 class="sub-header">{{orgname | uppercase}} Leaderboard</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Member</th>
-                  <th>ID</th>
-                  <th>Number of Repos</th>
-                  <th>Type</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="member in members | orderBy: '-repoNum'">
-                  <td>{{member.login}}</td>
-                  <td>{{member.id}}</td>
-                  <td>{{member.repoNum}}</td>
-                  <td>{{member.type}}</td>
-                </tr>
-              </tbody>
-            </table>
+          <h2 class="sub-header">{{members.org | uppercase}} Leaderboard</h2>
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Name</th>
+                    <th>Number of Repos</th>
+                    <th>Follwers</th>
+                    <th>Following</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="member in members | orderBy: '-repoNum'">
+                    <td><a href="{{member.html_url}}">{{member.login}}</a></td>
+                    <td>{{member.userName}}</td>
+                    <td>{{member.repoNum}}</td>
+                    <td>{{member.followers}}</td>
+                    <td>{{member.following}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-
-        </div>
+          <div class="noOrgFound" ng-show="orgNotFound">
+            <h4>No Organization found!</h4>
+          </div>
         </div>
       </div>
     </div>
-
-    <footer class="footer">
-      <div class="container footer">
-        <p class="text-muted">Copyright Andela.</p>
-      </div>
-    </footer>
 
     <!-- JavaScript
     ================================================== -->

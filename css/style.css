@@ -1,5 +1,10 @@
-.main {
-  margin-top: 25px;
+body {
+  background: #FFFFCC;
+}
+
+.paragragh {
+  margin: 50px;
+  text-align: justify;
 }
 
 .submain img{
@@ -14,3 +19,9 @@
   text-align: center;
   background-color: black;
 }
+
+.noOrgFound {
+  margin: 50px;
+}
+
+
