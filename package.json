@@ -1,0 +1,17 @@
+{
+  "name": "GitStats",
+  "version": "1.0.0",
+  "description": "\"Are you a learner?,..I know you are!, Come learn to code! ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Oluwayemisi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
