@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="gitHub">
+  <head>
+    <title>Dashboard for Andela GitHub Users</title>
+
+    <!-- CSS -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+  </head>
+
+  <body ng-controller="GitCtrl">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Andela Coding Leaderboard</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 main">
+          <h1 class="page-header">Dashboard</h1>
+          <div>
+            <p>Enter a single Github organisation below and click the button to display organisation leaderboard.</p>
+            <div class="col-md-6 main">
+            <input type="text" class="form-control" id="ghorgname" ng-model="orgname" placeholder="Github organization...">
+            <button type="button" class="btn btn-primary" id="ghsubmitbtn" ng-click="getGitInfo()">Pull Organisation Leaderboard</button>
+            </div>
+            <div id="ghapidata" class="clearfix"></div>
+          </div>
+          
+
+          <h2 class="sub-header">Andela Leaderboard</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>ID</th>
+                  <th>Number of Repos</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="member in members | orderBy: '-repoNum'">
+                  <td>{{member.login}}</td>
+                  <td>{{member.id}}</td>
+                  <td>{{member.repoNum}}</td>
+                  <td>{{member.type}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container footer">
+        <p class="text-muted">Copyright Andela.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/gitController.js"></script>
+  </body>
+</html>
