@@ -15,6 +15,8 @@ app.controller("GitCtrl", function($scope, $http, $q){
     $scope.members = [];
     var userDataCall;
     var repoDataCall;
+    var repoCommitNum;
+    var userRepos;
     
     $http.get($scope.orgUrl + $scope.orgname + "/members" + $scope.authKey)
       .success(function(data){
@@ -23,16 +25,60 @@ app.controller("GitCtrl", function($scope, $http, $q){
         angular.forEach(data, function(userData) {         
 
           userDataCall = $http.get($scope.usersUrl + userData.login + $scope.authKey);
+                    
+          repoDataCall = $http.get($scope.usersUrl + userData.login + "/repos" + $scope.authKey + "&page=1&per_page=100");
+          repoDataCallTwo = $http.get($scope.usersUrl + userData.login + "/repos" + $scope.authKey + "&page=2&per_page=100");
           
-          repoDataCall = $http.get($scope.usersUrl + userData.login + "/repos" + $scope.authKey);
-          
-          $q.all([userDataCall, repoDataCall]).then(function(data){
-            $scope.members.push({login: userData.login, fullName: data[0].data.name, repoNum: data[0].data.public_repos, userGitUrl: data[0].data.html_url, repoNum2: data[1].data.length});            
+          $q.all([userDataCall, repoDataCall, repoDataCallTwo]).then(function(data){
+            $scope.members.push({login: userData.login, fullName: data[0].data.name, repoNum: data[0].data.public_repos, userGitUrl: data[0].data.html_url, followers: data[0].data.followers, following: data[0].data.following});
+            
+            userRepos = [];
+            angular.forEach(data[1].data, function(data) {
+
+              if(data.owner && data.owner.login === userData.login){
+                userRepos.push(data.name)
+              }
+
+            });
+
+            angular.forEach(data[2].data, function(data) {
+              if(data.owner && data.owner.login === userData.login){
+                userRepos.push(data.name);
+              }
+
+            });
+
+            $scope.getCommitCount(userRepos, userData.login, $scope.members.length-1);
+            
           });
               
       });      
       $scope.loaded = true;             
-  });
-}
+    });
+  }
 
+  $scope.getCommitCount = function(repoNames, username, index){
+    var commitCount = 0;
+    var commitsList = [];
+    angular.forEach(repoNames, function(name) {
+      commitsList.push($http.get($scope.reposUrl + username + "/" + name + "/stats/participation" + $scope.authKey));        
+
+    });
+
+    $q.all(commitsList).then(function(data){
+      
+      angular.forEach(data, function(commitData) {
+        
+        if(commitData.data.owner){
+           for(var i=0; i<commitData.data.owner.length; i++){
+              commitCount += commitData.data.owner[i];            
+            } 
+          }
+      });
+
+      console.log($scope.members[index].login, commitCount);
+      $scope.members[index].commits = commitCount;
+     
+    });    
+  }
 });
