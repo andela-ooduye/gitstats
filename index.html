@@ -30,7 +30,7 @@
           </div>
           
           <div ng-show = "loaded">
-          <h2 class="sub-header">{{members.org | uppercase}} Leaderboard</h2>
+          <h2 class="sub-header">{{companyName | uppercase}} Leaderboard</h2>
             <div class="table-responsive">
               <table class="table table-striped">
                 <thead>
@@ -40,15 +40,17 @@
                     <th>Number of Repos</th>
                     <th>Follwers</th>
                     <th>Following</th>
+                    <th>Commits</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="member in members | orderBy: '-repoNum'">
-                    <td><a href="{{member.html_url}}">{{member.login}}</a></td>
-                    <td>{{member.userName}}</td>
+                    <td><a href="{{member.userGitUrl}}">{{member.login}}</a></td>
+                    <td>{{member.fullName}}</td>
                     <td>{{member.repoNum}}</td>
                     <td>{{member.followers}}</td>
                     <td>{{member.following}}</td>
+                    <td>{{member.repoNum2}}</td>
                   </tr>
                 </tbody>
               </table>

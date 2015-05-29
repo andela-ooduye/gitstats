@@ -1,5 +1,5 @@
 var app = angular.module("gitHub", []);
-app.controller("GitCtrl", function($scope, $http){
+app.controller("GitCtrl", function($scope, $http, $q){
   $scope.getGitInfo = function () {
     $scope.orgNotFound = false;
     $scope.loaded = false;
@@ -8,33 +8,31 @@ app.controller("GitCtrl", function($scope, $http){
     $scope.orgUrl = "https://api.github.com/orgs/";
     $scope.usersUrl = "https://api.github.com/users/";
     $scope.reposUrl = "https://api.github.com/repos/";
+    $scope.members = [];
+    $scope.companyName;
+
+    var i = 0;
+    $scope.members = [];
+    var userDataCall;
+    var repoDataCall;
     
     $http.get($scope.orgUrl + $scope.orgname + "/members" + $scope.authKey)
       .success(function(data){
-        $scope.members = data;
-        $scope.loaded = true;
-        $scope.members.org = $scope.orgname;
-        var i = 0;
+        $scope.companyName = $scope.orgname;
 
-        for (x in $scope.members){
-          $http.get($scope.usersUrl + $scope.members[x].login + $scope.authKey)
-            .success(function(data){
-              $scope.users = data;
-              if ($scope.members[i]){
-                $scope.members[i].userName = $scope.users.name;
-                $scope.members[i].repoNum = $scope.users.public_repos;
-                $scope.members[i].followers = $scope.users.followers;
-                $scope.members[i].following = $scope.users.following;
-                ++i
-              }
-            })
-            .error(function(){
+        angular.forEach(data, function(userData) {         
 
-            })
-        }
-      })
-      .error(function(){
-        $scope.orgNotFound = true;
-      })
-  }
-})
+          userDataCall = $http.get($scope.usersUrl + userData.login + $scope.authKey);
+          
+          repoDataCall = $http.get($scope.usersUrl + userData.login + "/repos" + $scope.authKey);
+          
+          $q.all([userDataCall, repoDataCall]).then(function(data){
+            $scope.members.push({login: userData.login, fullName: data[0].data.name, repoNum: data[0].data.public_repos, userGitUrl: data[0].data.html_url, repoNum2: data[1].data.length});            
+          });
+              
+      });      
+      $scope.loaded = true;             
+  });
+}
+
+});
