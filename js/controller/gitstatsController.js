@@ -8,10 +8,10 @@ app.controller("GitCtrl", function($scope, $http, $q){
     $scope.orgUrl = "https://api.github.com/orgs/";
     $scope.usersUrl = "https://api.github.com/users/";
     $scope.reposUrl = "https://api.github.com/repos/";
+
     $scope.members = [];
     $scope.companyName;
 
-    $scope.members = [];
     var userDataCall;
     var repoDataCall;
     var repoCommitNum;
