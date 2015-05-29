@@ -11,7 +11,6 @@ app.controller("GitCtrl", function($scope, $http, $q){
     $scope.members = [];
     $scope.companyName;
 
-    var i = 0;
     $scope.members = [];
     var userDataCall;
     var repoDataCall;
@@ -54,6 +53,8 @@ app.controller("GitCtrl", function($scope, $http, $q){
               
       });      
       $scope.loaded = true;             
+    }).error(function(){
+        $scope.orgNotFound = true;
     });
   }
 

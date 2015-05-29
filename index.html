@@ -38,14 +38,14 @@
                     <th>Member</th>
                     <th>Name</th>
                     <th>Number of Repos</th>
-                    <th>Follwers</th>
+                    <th>Followers</th>
                     <th>Following</th>
                     <th title="Commits for last one year on authored public project(s)">Commits</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="member in members | orderBy: '-repoNum'">
-                    <td><a href="{{member.userGitUrl}}">{{member.login}}</a></td>
+                    <td><a href="{{member.html_url}}">{{member.login}}</a></td>
                     <td>{{member.fullName}}</td>
                     <td>{{member.repoNum}}</td>
                     <td>{{member.followers}}</td>
@@ -59,7 +59,6 @@
           <div class="noOrgFound" ng-show="orgNotFound">
             <h4>No Organization found!</h4>
           </div>
-
         </div>
       </div>
     </div>
