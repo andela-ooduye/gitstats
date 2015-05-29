@@ -74,10 +74,9 @@ app.controller("GitCtrl", function($scope, $http, $q){
            for(var i=0; i<commitData.data.owner.length; i++){
               commitCount += commitData.data.owner[i];            
             } 
-          }
+        }
       });
 
-      console.log($scope.members[index].login, commitCount);
       $scope.members[index].commits = commitCount;
      
     });    

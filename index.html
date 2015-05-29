@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="member in members | orderBy: '-repoNum'">
-                    <td><a href="{{member.html_url}}">{{member.login}}</a></td>
+                    <td><a href="{{member.userGitUrl}}">{{member.login}}</a></td>
                     <td>{{member.fullName}}</td>
                     <td>{{member.repoNum}}</td>
                     <td>{{member.followers}}</td>
